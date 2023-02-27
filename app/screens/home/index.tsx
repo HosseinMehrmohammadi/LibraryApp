@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BookList from '../../components/bookList';
-import { View } from 'react-native';
+import { ToastAndroid, View } from 'react-native';
 import CustomButton from '../../components/customButton';
 import Dialog from "react-native-dialog";
 import colors from '../../../assets/colors';
@@ -35,14 +35,29 @@ const Home: React.FC = () => {
     };
 
     const onPressAdd = () => {
-        const book: AddBook = {
-            title: dialogInput.title,
-            genre: dialogInput.genre,
-            yearPublished: parseInt(dialogInput.yearPublished),
-            author: dialogInput.author
+        if (dialogInput.author == '' || dialogInput.genre == '' || dialogInput.title == '' || dialogInput.yearPublished == '') {
+            ToastAndroid.showWithGravity('Please fill in all the fields.', 4, ToastAndroid.BOTTOM);
+        } else {
+            const book: AddBook = {
+                title: dialogInput.title,
+                genre: dialogInput.genre,
+                yearPublished: parseInt(dialogInput.yearPublished),
+                author: dialogInput.author
+            }
+
+            if (!Number.isNaN(book.yearPublished)) {
+                dispatch(addBookAsync({addBook: book}));
+                setDialogInput({
+                    title: '',
+                    author: '',
+                    yearPublished: '',
+                    genre: '',
+                })
+                setVisible(false);
+            } else {
+                ToastAndroid.showWithGravity('Published date must be a number.', 4, ToastAndroid.BOTTOM);
+            }
         }
-        dispatch(addBookAsync({addBook: book}));
-        setVisible(false);
     };
 
     const onChangeText = (homeProps: HomeProps) => {

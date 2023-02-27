@@ -40,9 +40,10 @@ export const getBook = async (id: string): Promise<NetworkResponse<Book>> => {
 
     if (response.ok) {
         const json = await response.json()
+        
         return {
             type: 'success',
-            body: json.results
+            body: json
         }
     } else {
         return {
@@ -69,7 +70,7 @@ export const addBook = async (book: AddBook): Promise<NetworkResponse<undefined>
         },
     );
 
-    if (response.ok) {        
+    if (response.ok) {      
         return {
             type: 'success',
         }
@@ -97,7 +98,7 @@ export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book
         },
     );
 
-    if (response.ok) {
+    if (response.ok) {        
         return {
             type: 'success',
         }
@@ -120,7 +121,7 @@ export const deleteBook = async (id: string): Promise<NetworkResponse<Book>> => 
         },
     );
 
-    if (response.ok) {
+    if (response.ok) {       
         return {
             type: 'success',
         }
