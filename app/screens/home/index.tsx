@@ -5,9 +5,26 @@ import CustomButton from '../../components/customButton';
 import Dialog from "react-native-dialog";
 import colors from '../../../assets/colors';
 import styles from './styles';
+import { useAppDispatch } from '../../redux/hook';
+import { addBook } from '../../redux/bookListSlice';
+import { AddBook } from '../../models/book';
+
+type HomeProps = {
+    title: string;
+    author: string;
+    yearPublished: string;
+    genre: string;
+}
 
 const Home: React.FC = () => {
+    const dispatch = useAppDispatch();
     const [visible, setVisible] = useState(false);
+    const [dialogInput, setDialogInput] = useState<HomeProps>({
+        title: '',
+        author: '',
+        yearPublished: '',
+        genre: '',
+    });
 
     const showDialog = () => {
         setVisible(true);
@@ -18,9 +35,19 @@ const Home: React.FC = () => {
     };
 
     const onPressAdd = () => {
-        
+        const book: AddBook = {
+            title: dialogInput.title,
+            genre: dialogInput.genre,
+            yearPublished: parseInt(dialogInput.yearPublished),
+            author: dialogInput.author
+        }
+        dispatch(addBook({addBook: book}));
         setVisible(false);
     };
+
+    const onChangeText = (homeProps: HomeProps) => {
+        setDialogInput(homeProps);
+    }
 
     return (
         <>
@@ -40,6 +67,18 @@ const Home: React.FC = () => {
                     <Dialog.Description>
                         Please enter the book information.
                     </Dialog.Description>
+                    <Dialog.Input placeholder='title' onChangeText={(text) => onChangeText({...dialogInput, title: text})}>
+                        {dialogInput.title}
+                    </Dialog.Input>
+                    <Dialog.Input placeholder='author' onChangeText={(text) => onChangeText({...dialogInput, author: text})}>
+                        {dialogInput.author}
+                    </Dialog.Input>
+                    <Dialog.Input placeholder='genre' onChangeText={(text) => onChangeText({...dialogInput, genre: text})}>
+                        {dialogInput.genre}
+                    </Dialog.Input>
+                    <Dialog.Input placeholder='published date (y)' onChangeText={(text) => onChangeText({...dialogInput, yearPublished: text})}>
+                        {dialogInput.yearPublished}
+                    </Dialog.Input>
                     <Dialog.Button onPress={onPressCancel} label="Cancel" />
                     <Dialog.Button onPress={onPressAdd} label="Add" />
                 </Dialog.Container>

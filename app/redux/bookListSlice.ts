@@ -60,10 +60,10 @@ export const getBook = createAsyncThunk<{book: Book}, {id: string}>(
     },
 );
 
-export const addBook = createAsyncThunk<{}, {addbook: AddBook}>(
+export const addBook = createAsyncThunk<{}, {addBook: AddBook}>(
     'addBook',
-    async ({addbook}) => {
-        const response = await bookApi.addBook(addbook);
+    async ({addBook}) => {
+        const response = await bookApi.addBook(addBook);
         if (response.type === 'success') {
             return {}
         } else {
