@@ -5,14 +5,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    width:'92%',
+    flexDirection: 'column'
   },
-  
-  bookListContainer: {
+
+  buttonContainer: {
     display: 'flex',
-    marginTop: 20,
-    alignSelf: 'center',
-    width: '100%',
+    alignItems: 'center',
+    marginTop: 40,
+    Width: '30%'
   }
 });
 
