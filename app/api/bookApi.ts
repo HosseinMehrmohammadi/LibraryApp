@@ -81,6 +81,8 @@ export const addBook = async (book: AddBook): Promise<NetworkResponse<undefined>
 }
 
 export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book>> => {
+    const check = !(book.checkedOut);
+
     const response = await fetch(
         `https://postman-library-api.glitch.me/books/${book.id}`,
         {
@@ -90,7 +92,7 @@ export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "checkedOut": book.checkedOut,
+                "checkedOut": check,
             }),
         },
     );
