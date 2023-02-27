@@ -3,7 +3,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../../../assets/colors";
 import { styles } from "./styles";
 
-
 type Props = {
   OnPressDelete: (event: GestureResponderEvent) => void | undefined;
   OnPressUpdate: (event: GestureResponderEvent) => void | undefined;
@@ -25,7 +24,7 @@ const BookItem: React.FC<Props> = (props: Props): JSX.Element => {
             <Text style={{color: colors.black, fontSize: 14}}>{props.Title}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{color: colors.black, fontSize: 12}}>author: {props.Author}</Text>
+            <Text style={{color: colors.black, fontSize: 12, maxWidth: '60%'}}>author: {props.Author}</Text>
             <Text style={{color: colors.lightGray, fontSize: 10, alignSelf: 'center'}}>{props.Genre}, {props.YearPublished}</Text>
           </View>
         </View>

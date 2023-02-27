@@ -33,18 +33,22 @@ const BookList: React.FC = () => {
     dispatch(updateBook({updateBook: book}));
   }
 
-  const renderBookItem: any = (item: Book) => (
-    <BookItem
-      OnPressDelete={() => onDelete(item.id)}
-      OnPressUpdate={() => onUpdate({id: item.id, checkedOut:item.checkedOut})}
-      Title= {item.title}
-      Author= {item.author}
-      YearPublished= {item.yearPublished}
-      Genre= {item.genre}
-      CheckedOut= {item.checkedOut}
-    />
-  );
-
+  const renderBookItem: any = ({item}: any) => {
+    item = item as Book;
+    return (
+        <BookItem
+        OnPressDelete={() => onDelete(item.id)}
+        OnPressUpdate={() => onUpdate({id: item.id, checkedOut:item.checkedOut})}
+        Title= {item.title}
+        Author= {item.author}
+        YearPublished= {item.yearPublished}
+        Genre= {item.genre}
+        CheckedOut= {item.checkedOut}
+      />
+    );
+    
+  }
+  
   return (
     <View style={styles.container}>
       {screenState.error && <Text>There's something wrong!!!</Text>}

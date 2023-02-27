@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     padding: 5,
     borderBottomWidth: 1,
     borderBottomColor: colors.textInputBackground,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
 
   button: {
@@ -26,24 +26,26 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     width: '20%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 
   bookInfoContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '60%',
+    width: '80%',
     justifyContent: 'space-between',
-    padding: 10
+    padding: 10,
   },
 
   titleContainer: {
     display: 'flex',
+    height: 20
   },
 
   infoContainer: {
     display: "flex",
     flexDirection: 'row',
     justifyContent: 'space-between',
+    height: 20
   }
 });
