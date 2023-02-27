@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, FlatList, RefreshControl, Text, View} from 'react-native';
+import { FlatList, RefreshControl, Text, View} from 'react-native';
 import styles from './styles'
 import { RootState } from '../../redux/store';
-import { getBooks, addBook, deleteBook } from '../../redux/bookListSlice';
+import { getBooks, deleteBook, updateBook } from '../../redux/bookListSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hook';
 import BookItem from '../bookItem';
 import { Book } from '../../models/book';
+import { UpdateBook } from '../../models/book';
 
 const BookList: React.FC = () => {
   
@@ -28,13 +29,19 @@ const BookList: React.FC = () => {
     dispatch(deleteBook({id: id}));
   }
 
+  const onUpdate = (book: UpdateBook) => {
+    dispatch(updateBook({updateBook: book}));
+  }
+
   const renderBookItem: any = (item: Book) => (
     <BookItem
       OnPressDelete={() => onDelete(item.id)}
-      Title={`${item.title}`}
-      Author={`${item.author}`}
-      YearPublished={item.yearPublished}
-      Genre={`${item.genre}`}
+      OnPressUpdate={() => onUpdate({id: item.id, checkedOut:item.checkedOut})}
+      Title= {item.title}
+      Author= {item.author}
+      YearPublished= {item.yearPublished}
+      Genre= {item.genre}
+      CheckedOut= {item.checkedOut}
     />
   );
 
@@ -49,7 +56,7 @@ const BookList: React.FC = () => {
             data={screenState.books}
             renderItem={renderBookItem}
             showsVerticalScrollIndicator={false}
-            initialNumToRender={8}
+            initialNumToRender={10}
           />
         </View>
       }

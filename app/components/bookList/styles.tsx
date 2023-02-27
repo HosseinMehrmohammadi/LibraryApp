@@ -6,14 +6,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    width: 400
+    width:'92%',
+    // height: '80%'
   },
   
   bookListContainer: {
     display: 'flex',
     marginTop: 40,
-    width: '95%',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    width: '100%',
+    // height: '100%'
   }
 });
 
