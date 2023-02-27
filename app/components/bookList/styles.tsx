@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
     width: '100%',
+  },
+
+  loader: {
+    width: 50,
+    height: 50
   }
 });
 

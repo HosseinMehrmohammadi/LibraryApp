@@ -6,7 +6,7 @@ import Dialog from "react-native-dialog";
 import colors from '../../../assets/colors';
 import styles from './styles';
 import { useAppDispatch } from '../../redux/hook';
-import { addBook } from '../../redux/bookListSlice';
+import { addBookAsync } from '../../redux/bookListSlice';
 import { AddBook } from '../../models/book';
 
 type HomeProps = {
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
             yearPublished: parseInt(dialogInput.yearPublished),
             author: dialogInput.author
         }
-        dispatch(addBook({addBook: book}));
+        dispatch(addBookAsync({addBook: book}));
         setVisible(false);
     };
 
@@ -84,7 +84,6 @@ const Home: React.FC = () => {
                 </Dialog.Container>
             </View>
         </>
-        
     );
 }
 

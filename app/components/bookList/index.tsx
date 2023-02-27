@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, Text, View} from 'react-native';
-import styles from './styles'
+import { FlatList, RefreshControl, View} from 'react-native';
+import AnimatedLoader from 'react-native-animated-loader';
 import { RootState } from '../../redux/store';
-import { getBooks, deleteBook, updateBook } from '../../redux/bookListSlice';
+import { getBooksAsync, deleteBookAsync, updateBookAsync } from '../../redux/bookListSlice';
 import { useAppDispatch, useAppSelector } from '../../redux/hook';
 import BookItem from '../bookItem';
 import { Book } from '../../models/book';
 import { UpdateBook } from '../../models/book';
+import styles from './styles'
 
 const BookList: React.FC = () => {
   
@@ -16,21 +17,21 @@ const BookList: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => { 
-    dispatch(getBooks());
+    dispatch(getBooksAsync());
   }, [dispatch])
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    dispatch(getBooks());
+    dispatch(getBooksAsync());
     setRefreshing(false);
   }, [dispatch]);
 
   const onDelete = (id: string) => {
-    dispatch(deleteBook({id: id}));
+    dispatch(deleteBookAsync({id: id}));
   }
 
   const onUpdate = (book: UpdateBook) => {
-    dispatch(updateBook({updateBook: book}));
+    dispatch(updateBookAsync({updateBook: book}));
   }
 
   const renderBookItem: any = ({item}: any) => {
@@ -51,9 +52,13 @@ const BookList: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      {screenState.error && <Text>There's something wrong!!!</Text>}
-      {screenState.loading && <Text>Loading...!!!</Text>}
-      {!screenState.error && !screenState.loading && 
+      <AnimatedLoader
+        visible={screenState.loading}
+        overlayColor="rgba(255,255,255,0.75)"
+        animationStyle={styles.loader}
+        speed={1}
+      />
+      {!screenState.loading && 
         <View style={styles.bookListContainer}>
           <FlatList
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

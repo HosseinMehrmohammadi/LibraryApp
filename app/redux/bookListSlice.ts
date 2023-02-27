@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as bookApi from '../api/bookApi';
 import { AddBook, Book, UpdateBook } from "../models/book";
+import { ToastAndroid } from 'react-native';
 
 export type BookListState = {
     books: Book[],
@@ -24,25 +25,28 @@ const initialState: BookListState = {
     error: false
 }
 
-export const getBooks = createAsyncThunk<{books: Book[]}>(
+export const getBooksAsync = createAsyncThunk<{books: Book[]}>(
     'getBooks',
     async () => {
         const response = await bookApi.getBooks();
         if (response.type === 'success') {
+            ToastAndroid.showWithGravity('! Getting Books Succeeded !', 4, ToastAndroid.BOTTOM);
             return {
                 books: response.body ?? []
             }
         } else {
+            ToastAndroid.showWithGravity('! Getting Books Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error getting books'
         }
     },
 );
 
-export const getBook = createAsyncThunk<{book: Book}, {id: string}>(
+export const getBookAsync = createAsyncThunk<{book: Book}, {id: string}>(
     'getBook',
     async ({id}) => {
         const response = await bookApi.getBook(id);
         if (response.type === 'success') {
+            ToastAndroid.showWithGravity('! Getting Book Succeeded !', 4, ToastAndroid.BOTTOM);
             return {
                 book: response.body ?? {
                     title: '',
@@ -55,42 +59,49 @@ export const getBook = createAsyncThunk<{book: Book}, {id: string}>(
                 },
             }
         } else {
+            ToastAndroid.showWithGravity('! Getting Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error getting book'
         }
     },
 );
 
-export const addBook = createAsyncThunk<{}, {addBook: AddBook}>(
+export const addBookAsync = createAsyncThunk<{}, {addBook: AddBook}>(
     'addBook',
     async ({addBook}) => {
         const response = await bookApi.addBook(addBook);
         if (response.type === 'success') {
+            ToastAndroid.showWithGravity('! Adding Book Succeeded !', 4, ToastAndroid.BOTTOM);
             return {}
         } else {
+            ToastAndroid.showWithGravity('! Adding Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error adding book'
         }
     },
 );
 
-export const updateBook = createAsyncThunk<{}, {updateBook: UpdateBook}>(
+export const updateBookAsync = createAsyncThunk<{}, {updateBook: UpdateBook}>(
     'updateBook',
     async ({updateBook}) => {
         const response = await bookApi.updateBook(updateBook);
         if (response.type === 'success') {
+            ToastAndroid.showWithGravity('! Updating Book Succeeded !', 4, ToastAndroid.BOTTOM);
             return {}
         } else {
+            ToastAndroid.showWithGravity('! Updating Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error updating book'
         }
     },
 );
 
-export const deleteBook = createAsyncThunk<{} ,{id: string}>(
+export const deleteBookAsync = createAsyncThunk<{} ,{id: string}>(
     'deleteBook',
     async ({id}) => {
         const response = await bookApi.deleteBook(id);
         if (response.type === 'success') {
+            ToastAndroid.showWithGravity('! Deleting Book Succeeded !', 4, ToastAndroid.BOTTOM);
             return {}
         } else {
+            ToastAndroid.showWithGravity('! Deleting Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error deleting book'
         }
     },
@@ -102,69 +113,69 @@ const bookListSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(getBooks.pending, (state) => {
+        .addCase(getBooksAsync.pending, (state) => {
             state.loading = true;
             state.error = false;
         })
-        .addCase(getBooks.fulfilled, (state, action) => {
+        .addCase(getBooksAsync.fulfilled, (state, action) => {
             state.books = action.payload.books;
             state.loading = false;
             state.error = false;
         })
-        .addCase(getBooks.rejected, (state) => {
+        .addCase(getBooksAsync.rejected, (state) => {
             state.loading = false;
             state.error = true;
         })
 
-        .addCase(getBook.pending, (state) => {
+        .addCase(getBookAsync.pending, (state) => {
             state.loading = true;
             state.error = false;
         })
-        .addCase(getBook.fulfilled, (state, action) => {
+        .addCase(getBookAsync.fulfilled, (state, action) => {
             state.book = action.payload.book;
             state.loading = false;
             state.error = false;
         })
-        .addCase(getBook.rejected, (state) => {
+        .addCase(getBookAsync.rejected, (state) => {
             state.loading = false;
             state.error = true;
         })
 
-        .addCase(addBook.pending, (state) => {
+        .addCase(addBookAsync.pending, (state) => {
             state.loading = true;
             state.error = false;
         })
-        .addCase(addBook.fulfilled, (state) => {
+        .addCase(addBookAsync.fulfilled, (state) => {
             state.loading = false;
             state.error = false;
         })
-        .addCase(addBook.rejected, (state) => {
+        .addCase(addBookAsync.rejected, (state) => {
             state.loading = false;
             state.error = true;
         })
 
-        .addCase(updateBook.pending, (state) => {
+        .addCase(updateBookAsync.pending, (state) => {
             state.loading = true;
             state.error = false;
         })
-        .addCase(updateBook.fulfilled, (state) => {
+        .addCase(updateBookAsync.fulfilled, (state) => {
             state.loading = false;
             state.error = false;
         })
-        .addCase(updateBook.rejected, (state) => {
+        .addCase(updateBookAsync.rejected, (state) => {
             state.loading = false;
             state.error = true;
         })
 
-        .addCase(deleteBook.pending, (state) => {
+        .addCase(deleteBookAsync.pending, (state) => {
             state.loading = true;
             state.error = false;
         })
-        .addCase(deleteBook.fulfilled, (state) => {
+        .addCase(deleteBookAsync.fulfilled, (state) => {
             state.loading = false;
             state.error = false;
         })
-        .addCase(deleteBook.rejected, (state) => {
+        .addCase(deleteBookAsync.rejected, (state) => {
             state.loading = false;
             state.error = true;
         })
