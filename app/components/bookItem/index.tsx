@@ -1,7 +1,8 @@
-import { Button, GestureResponderEvent, Pressable, Text, View } from "react-native";
+import { GestureResponderEvent, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../../../assets/colors";
 import { styles } from "./styles";
+import CustomButton from "../customButton";
 
 type Props = {
   OnPressDelete: (event: GestureResponderEvent) => void | undefined;
@@ -30,18 +31,24 @@ const BookItem: React.FC<Props> = (props: Props): JSX.Element => {
         </View>
         <View style={styles.buttonContainer}>
           {props.CheckedOut && 
-          <Pressable style={{...styles.button, backgroundColor: colors.green}} onPress={props.OnPressDelete}>
-            <Text style={{color: colors.white, fontSize: 10}}>Uncheck</Text>
-          </Pressable>
+          <CustomButton 
+            ButtonTitle= "Uncheck"
+            OnPress={props.OnPressUpdate}
+            Color={colors.green}
+          />
           }
           {!props.CheckedOut && 
-          <Pressable style={{...styles.button, backgroundColor: colors.green}} onPress={props.OnPressDelete}>
-            <Text style={{color: colors.white, fontSize: 10}}>Check</Text>
-          </Pressable>
+          <CustomButton 
+            ButtonTitle= "Check"
+            OnPress={props.OnPressUpdate}
+            Color={colors.green}
+          />
           }
-          <Pressable style={{...styles.button, backgroundColor: colors.red}} onPress={props.OnPressDelete}>
-            <Text style={{color: colors.white, fontSize: 10}}>Delete</Text>
-          </Pressable>
+          <CustomButton 
+            ButtonTitle= "Delete"
+            OnPress={props.OnPressDelete}
+            Color={colors.red}
+          />
         </View>
       </TouchableOpacity>
   );

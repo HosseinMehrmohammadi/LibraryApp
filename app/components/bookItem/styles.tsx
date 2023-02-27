@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import colors from "../../../assets/colors";
-import common from "../../../assets/common";
+
 
 export const styles = StyleSheet.create({
   bookContainer: {
@@ -10,16 +10,6 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.textInputBackground,
     justifyContent: "space-between",
-  },
-
-  button: {
-    margin: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 5,
-    paddingHorizontal: 2,
-    borderRadius: 4,
-    elevation: 3,
   },
 
   buttonContainer: {
