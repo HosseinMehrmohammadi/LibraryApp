@@ -23,7 +23,7 @@ const Search: React.FC = () => {
         dispatch(getBooksAsync());
         setRefreshing(false);
         setSearchInput('');
-        onPressSearch();
+        setSearchBooks([]);
     }, [dispatch]);
 
     const onPressSearch = () => {

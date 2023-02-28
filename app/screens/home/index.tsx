@@ -45,7 +45,7 @@ const Home: React.FC = ({ navigation }: any) => {
                 author: dialogInput.author
             }
 
-            if (!Number.isNaN(book.yearPublished)) {
+            if (!Number.isNaN(book.yearPublished) && book.yearPublished < 2024) {
                 dispatch(addBookAsync({addBook: book}));
                 setDialogInput({
                     title: '',
@@ -55,7 +55,7 @@ const Home: React.FC = ({ navigation }: any) => {
                 })
                 setVisible(false);
             } else {
-                ToastAndroid.showWithGravity('Published date must be a number.', 4, ToastAndroid.BOTTOM);
+                ToastAndroid.showWithGravity('Published date must be a valid number.', 4, ToastAndroid.BOTTOM);
             }
         }
     };
