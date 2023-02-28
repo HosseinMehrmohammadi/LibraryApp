@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import BookList from '../../components/bookList';
 import { ToastAndroid, View } from 'react-native';
 import CustomButton from '../../components/customButton';
-import Dialog from "react-native-dialog";
-import colors from '../../../assets/colors';
-import styles from './styles';
 import { useAppDispatch } from '../../redux/hook';
 import { addBookAsync } from '../../redux/bookListSlice';
 import { AddBook } from '../../models/book';
+import Dialog from "react-native-dialog";
+import colors from '../../../assets/colors';
+import styles from './styles';
 
 type HomeProps = {
     title: string;
@@ -16,7 +16,7 @@ type HomeProps = {
     genre: string;
 }
 
-const Home: React.FC = () => {
+const Home: React.FC = ({ navigation }: any) => {
     const dispatch = useAppDispatch();
     const [visible, setVisible] = useState(false);
     const [dialogInput, setDialogInput] = useState<HomeProps>({
@@ -64,15 +64,28 @@ const Home: React.FC = () => {
         setDialogInput(homeProps);
     }
 
+    const navigateToSearch = () => {
+        navigation.navigate('Search');
+    }
+
     return (
-        <>
+        <View style={styles.wrapper}>
             <View style={styles.container}>
                 <View style={styles.buttonContainer}>
-                    <CustomButton
-                        ButtonTitle='Add Book'
-                        Color= {colors.gold}
-                        OnPress={showDialog}
-                    />
+                    <View style={{width: '30%'}}>
+                        <CustomButton
+                            ButtonTitle='Search'
+                            Color= {colors.gold}
+                            OnPress={navigateToSearch}
+                        />
+                    </View>
+                    <View style={{width: '30%'}}>
+                        <CustomButton
+                            ButtonTitle='Add Book'
+                            Color= {colors.gold}
+                            OnPress={showDialog}
+                        />
+                    </View>    
                 </View>
                 <BookList />
             </View>
@@ -98,7 +111,7 @@ const Home: React.FC = () => {
                     <Dialog.Button onPress={onPressAdd} label="Add" />
                 </Dialog.Container>
             </View>
-        </>
+        </View>
     );
 }
 
