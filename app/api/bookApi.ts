@@ -81,7 +81,7 @@ export const addBook = async (book: AddBook): Promise<NetworkResponse<undefined>
     }
 }
 
-export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book>> => {
+export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<string>> => {
     const check = !(book.checkedOut);
 
     const response = await fetch(
@@ -101,6 +101,7 @@ export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book
     if (response.ok) {        
         return {
             type: 'success',
+            body: book.id,
         }
     } else {
         return {
@@ -109,7 +110,7 @@ export const updateBook = async (book: UpdateBook): Promise<NetworkResponse<Book
     }
 }
 
-export const deleteBook = async (id: string): Promise<NetworkResponse<Book>> => {
+export const deleteBook = async (id: string): Promise<NetworkResponse<string>> => {
     const response = await fetch(
         `https://postman-library-api.glitch.me/books/${id}`,
         {
@@ -124,6 +125,7 @@ export const deleteBook = async (id: string): Promise<NetworkResponse<Book>> => 
     if (response.ok) {       
         return {
             type: 'success',
+            body: id,
         }
     } else {
         return {

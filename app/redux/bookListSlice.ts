@@ -7,7 +7,7 @@ export type BookListState = {
     books: Book[],
     book: Book,
     loading: boolean,
-    error: boolean
+    error: boolean,
 }
 
 const initialState: BookListState = {
@@ -22,7 +22,7 @@ const initialState: BookListState = {
         genre: ''
     },
     loading: false,
-    error: false
+    error: false,
 }
 
 export const getBooksAsync = createAsyncThunk<{books: Book[]}>(
@@ -79,13 +79,13 @@ export const addBookAsync = createAsyncThunk<{}, {addBook: AddBook}>(
     },
 );
 
-export const updateBookAsync = createAsyncThunk<{}, {updateBook: UpdateBook}>(
+export const updateBookAsync = createAsyncThunk<{bookId: string}, {updateBook: UpdateBook}>(
     'updateBook',
     async ({updateBook}) => {
         const response = await bookApi.updateBook(updateBook);
         if (response.type === 'success') {
             ToastAndroid.showWithGravity('! Updating Book Succeeded !', 4, ToastAndroid.BOTTOM);
-            return {}
+            return {bookId: response.body ?? ''}
         } else {
             ToastAndroid.showWithGravity('! Updating Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error updating book'
@@ -93,13 +93,13 @@ export const updateBookAsync = createAsyncThunk<{}, {updateBook: UpdateBook}>(
     },
 );
 
-export const deleteBookAsync = createAsyncThunk<{} ,{id: string}>(
+export const deleteBookAsync = createAsyncThunk<{bookId: string} ,{id: string}>(
     'deleteBook',
     async ({id}) => {
         const response = await bookApi.deleteBook(id);
         if (response.type === 'success') {
             ToastAndroid.showWithGravity('! Deleting Book Succeeded !', 4, ToastAndroid.BOTTOM);
-            return {}
+            return {bookId: response.body ?? ''}
         } else {
             ToastAndroid.showWithGravity('! Deleting Book Failed !', 4, ToastAndroid.BOTTOM);
             throw 'Error deleting book'
@@ -158,7 +158,12 @@ const bookListSlice = createSlice({
             state.loading = true;
             state.error = false;
         })
-        .addCase(updateBookAsync.fulfilled, (state) => {
+        .addCase(updateBookAsync.fulfilled, (state, action) => {
+            state.books.forEach((element) => {
+                if (element.id == action.payload.bookId) {
+                    element.checkedOut = !(element.checkedOut);
+                }
+            });
             state.loading = false;
             state.error = false;
         })
@@ -171,7 +176,13 @@ const bookListSlice = createSlice({
             state.loading = true;
             state.error = false;
         })
-        .addCase(deleteBookAsync.fulfilled, (state) => {
+        .addCase(deleteBookAsync.fulfilled, (state, action) => {
+            state.books.forEach((element) => {
+                if (element.id == action.payload.bookId) {
+                    let temp = state.books.indexOf(element);
+                    state.books.splice(temp, 1);
+                }
+            });
             state.loading = false;
             state.error = false;
         })
