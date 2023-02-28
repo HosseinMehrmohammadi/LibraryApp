@@ -22,11 +22,11 @@ const BookItem: React.FC<Props> = (props: Props): JSX.Element => {
         activeOpacity={0.5}>
         <View style={styles.bookInfoContainer}>
           <View style={styles.titleContainer}>
-            <Text style={{color: colors.black, fontSize: 14}}>{props.Title}</Text>
+            <Text style={styles.titleText}>{props.Title}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{color: colors.black, fontSize: 12, maxWidth: '60%'}}>author: {props.Author}</Text>
-            <Text style={{color: colors.lightGray, fontSize: 10, alignSelf: 'center'}}>{props.Genre}, {props.YearPublished}</Text>
+            <Text style={styles.authorText}>author: {props.Author}</Text>
+            <Text style={styles.genreText}>{props.Genre}, {props.YearPublished}</Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>

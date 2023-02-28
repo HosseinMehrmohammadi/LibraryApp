@@ -37,5 +37,22 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 20
+  },
+
+  titleText: {
+    color: colors.textBlack,
+    fontSize: 14,
+  },
+
+  authorText: {
+    color: colors.textBlack,
+    fontSize: 12,
+    maxWidth: '60%'
+  },
+
+  genreText: {
+    color: colors.lightGray, 
+    fontSize: 10, 
+    alignSelf: 'center'
   }
 });

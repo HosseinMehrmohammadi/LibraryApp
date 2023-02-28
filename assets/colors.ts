@@ -1,5 +1,4 @@
 class Colors {
-    public mainColor = "#00bb5d";
     public textBlack = "#333333";
     public white = "white";
     public black = "black";
