@@ -47,7 +47,6 @@ const BookList: React.FC = () => {
         CheckedOut= {item.checkedOut}
       />
     );
-    
   }
   
   return (
